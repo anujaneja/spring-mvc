@@ -40,6 +40,8 @@
                             <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>
                         </div>
                     </div>
+                    ${_csrf.token}
+                    ${_csrf.parameterName}
                     <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 
                     <div class="form-actions">

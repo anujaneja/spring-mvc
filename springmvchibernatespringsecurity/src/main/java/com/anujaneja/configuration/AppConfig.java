@@ -2,10 +2,9 @@ package com.anujaneja.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -21,12 +20,19 @@ import com.anujaneja.converter.RoleToUserProfileConverter;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.anujaneja")
+@PropertySources({
+        @PropertySource( value = { "classpath:application_base_config.properties" }),
+        @PropertySource(value= "file:${MYAPP_CONFIG_LOCATION}")
+})
 public class AppConfig extends WebMvcConfigurerAdapter{
      
      
     @Autowired
     RoleToUserProfileConverter roleToUserProfileConverter;
-     
+
+    @Autowired
+    Environment env;
+
  
     /**
      * Configure ViewResolvers to deliver preferred views.
