@@ -15,15 +15,22 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
  
 import com.anujaneja.converter.RoleToUserProfileConverter;
- 
- 
+
+import java.util.Arrays;
+
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.anujaneja")
 @PropertySources({
-        @PropertySource( value = { "classpath:application_base_config.properties" }),
-        @PropertySource(value= "file:${MYAPP_CONFIG_LOCATION}")
+        @PropertySource( value = { "classpath:application.properties"}),
+        @PropertySource( value = { "classpath:application-${profile}.properties" }),
+        @PropertySource(value= "file:${MYAPP_CONFIG_LOCATION}",ignoreResourceNotFound = true)
 })
+/**
+ * -Dprofile=dev
+ * -DMYAPP_CONFIG_LOCATION="/Users/mphrx/Documents/codebase/personal-projects/spring-mvc/externalConfig/externalConfig.properties"
+ */
 public class AppConfig extends WebMvcConfigurerAdapter{
      
      
@@ -39,7 +46,8 @@ public class AppConfig extends WebMvcConfigurerAdapter{
      */
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
- 
+        System.out.println("environment.getActiveProfiles(): "+ Arrays.asList(env.getActiveProfiles()));
+
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/views/");

@@ -1,5 +1,6 @@
 package com.anujaneja.configuration;
 
+import java.util.Arrays;
 import java.util.Properties;
  
 import javax.sql.DataSource;
@@ -23,6 +24,7 @@ public class HibernateConfiguration {
  
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
+        System.out.println("environment.getActiveProfiles(): "+Arrays.asList(environment.getActiveProfiles()));
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(new String[] { "com.anujaneja.model" });
